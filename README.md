@@ -38,12 +38,3 @@ RuneLite targets Java 11 for external plugins. Install JDK 11 or newer and run:
 ```
 
 The `run` task starts RuneLite in developer mode with this plugin loaded.
-
-## Plugin Hub
-
-To submit this plugin to RuneLite Plugin Hub, publish this repository publicly on GitHub, then submit a marker file to `runelite/plugin-hub`:
-
-```txt
-repository=https://github.com/<github-user>/nendarolas-inventory-value.git
-commit=<full-40-character-commit-hash>
-```
