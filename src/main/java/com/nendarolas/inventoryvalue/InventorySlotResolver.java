@@ -3,8 +3,8 @@ package com.nendarolas.inventoryvalue;
 import java.awt.Rectangle;
 import javax.inject.Inject;
 import net.runelite.api.Client;
+import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.api.widgets.WidgetItem;
 
 class InventorySlotResolver
@@ -28,7 +28,7 @@ class InventorySlotResolver
 			return widgetSlot;
 		}
 
-		final Widget inventory = client.getWidget(WidgetInfo.INVENTORY);
+		final Widget inventory = client.getWidget(InterfaceID.Inventory.ITEMS);
 		if (inventory == null)
 		{
 			return -1;

@@ -4,8 +4,8 @@ import java.awt.Color;
 import javax.inject.Inject;
 import net.runelite.api.Client;
 import net.runelite.api.MenuEntry;
+import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.ui.overlay.tooltip.Tooltip;
 import net.runelite.client.ui.overlay.tooltip.TooltipManager;
 import net.runelite.client.util.ColorUtil;
@@ -45,7 +45,7 @@ class InventoryValueTooltip
 			return;
 		}
 
-		final MenuEntry[] menuEntries = client.getMenuEntries();
+		final MenuEntry[] menuEntries = client.getMenu().getMenuEntries();
 		if (menuEntries.length == 0)
 		{
 			return;
@@ -53,7 +53,7 @@ class InventoryValueTooltip
 
 		final MenuEntry menuEntry = menuEntries[menuEntries.length - 1];
 		final Widget widget = menuEntry.getWidget();
-		if (widget == null || menuEntry.getParam1() != WidgetInfo.INVENTORY.getPackedId())
+		if (widget == null || menuEntry.getParam1() != InterfaceID.Inventory.ITEMS)
 		{
 			return;
 		}

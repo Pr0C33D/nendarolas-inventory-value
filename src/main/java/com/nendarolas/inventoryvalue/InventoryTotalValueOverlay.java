@@ -10,9 +10,9 @@ import javax.inject.Inject;
 import net.runelite.api.Client;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
+import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.gameval.InventoryID;
 import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayLayer;
 import net.runelite.client.ui.overlay.OverlayPosition;
@@ -21,10 +21,10 @@ class InventoryTotalValueOverlay extends Overlay
 {
 	private static final Color BACKGROUND = new Color(0, 0, 0, 150);
 	private static final Color SHADOW = new Color(0, 0, 0, 190);
-	private static final WidgetInfo[] INVENTORY_ICONS = {
-		WidgetInfo.FIXED_VIEWPORT_INVENTORY_ICON,
-		WidgetInfo.RESIZABLE_VIEWPORT_INVENTORY_ICON,
-		WidgetInfo.RESIZABLE_VIEWPORT_BOTTOM_LINE_INVENTORY_ICON
+	private static final int[] INVENTORY_ICONS = {
+		InterfaceID.Toplevel.ICON3,
+		InterfaceID.ToplevelOsrsStretch.ICON3,
+		InterfaceID.ToplevelPreEoc.ICON3
 	};
 	private static final int PADDING_X = 4;
 	private static final int PADDING_Y = 2;
@@ -116,9 +116,9 @@ class InventoryTotalValueOverlay extends Overlay
 
 	private Widget getVisibleInventoryIcon()
 	{
-		for (WidgetInfo widgetInfo : INVENTORY_ICONS)
+		for (int componentId : INVENTORY_ICONS)
 		{
-			final Widget widget = client.getWidget(widgetInfo);
+			final Widget widget = client.getWidget(componentId);
 			if (widget != null && !widget.isHidden())
 			{
 				final Rectangle bounds = widget.getBounds();
