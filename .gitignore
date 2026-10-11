@@ -1,0 +1,14 @@
+.gradle/
+build/
+out/
+.idea/
+.project
+.settings/
+.classpath
+nbactions.xml
+nb-configuration.xml
+nbproject/
+*.class
+.DS_Store
+.runelite-home/
+*.log
