@@ -1,12 +1,13 @@
 package com.nendarolas.inventoryvalue;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import javax.inject.Inject;
 import net.runelite.api.widgets.WidgetItem;
+import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.overlay.WidgetItemOverlay;
 
 class InventoryItemValueOverlay extends WidgetItemOverlay
@@ -38,6 +39,11 @@ class InventoryItemValueOverlay extends WidgetItemOverlay
 	@Override
 	public void renderItemOverlay(Graphics2D graphics, int itemId, WidgetItem widgetItem)
 	{
+		if (!config.showItemValues())
+		{
+			return;
+		}
+
 		if (slotExclusions.isExcluded(slotResolver.getSlot(widgetItem)))
 		{
 			return;
@@ -69,18 +75,18 @@ class InventoryItemValueOverlay extends WidgetItemOverlay
 		}
 
 		final Rectangle bounds = widgetItem.getCanvasBounds();
-		final Font originalFont = graphics.getFont();
-		final Font font = originalFont.deriveFont(Font.BOLD, config.textSize());
-
-		graphics.setFont(font);
-		final FontMetrics metrics = graphics.getFontMetrics();
+		final Graphics2D labelGraphics = (Graphics2D) graphics.create();
+		labelGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+		labelGraphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
+		labelGraphics.setFont(FontManager.getRunescapeSmallFont().deriveFont((float) config.textSize()));
+		final FontMetrics metrics = labelGraphics.getFontMetrics();
 		final int x = bounds.x + (bounds.width - metrics.stringWidth(text)) / 2;
 		final int y = bounds.y + bounds.height - 2;
 
-		graphics.setColor(SHADOW);
-		graphics.drawString(text, x + 1, y + 1);
-		graphics.setColor(color);
-		graphics.drawString(text, x, y);
-		graphics.setFont(originalFont);
+		labelGraphics.setColor(SHADOW);
+		labelGraphics.drawString(text, x + 1, y + 1);
+		labelGraphics.setColor(color);
+		labelGraphics.drawString(text, x, y);
+		labelGraphics.dispose();
 	}
 }

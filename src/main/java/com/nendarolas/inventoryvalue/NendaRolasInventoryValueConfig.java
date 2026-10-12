@@ -21,10 +21,21 @@ public interface NendaRolasInventoryValueConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "showItemValues",
+		name = "Show item values",
+		description = "Show value labels on inventory items; tooltip values remain available separately",
+		position = 1
+	)
+	default boolean showItemValues()
+	{
+		return true;
+	}
+
+	@ConfigItem(
 		keyName = "showStackValue",
 		name = "Show stack value",
 		description = "Show item stack value instead of one item value",
-		position = 1
+		position = 2
 	)
 	default boolean showStackValue()
 	{
@@ -35,7 +46,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "showUntradeable",
 		name = "Show untradeable",
 		description = "Show a label under items that are not Grand Exchange tradeable",
-		position = 2
+		position = 3
 	)
 	default boolean showUntradeable()
 	{
@@ -46,7 +57,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "showTooltipValue",
 		name = "Show tooltip value",
 		description = "Show item value when hovering over inventory items",
-		position = 3
+		position = 4
 	)
 	default boolean showTooltipValue()
 	{
@@ -57,7 +68,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "untradeableLabel",
 		name = "Untradeable label",
 		description = "Text shown under untradeable items",
-		position = 4
+		position = 5
 	)
 	default String untradeableLabel()
 	{
@@ -68,7 +79,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "untradeableColor",
 		name = "Untradeable color",
 		description = "Color of the untradeable item label",
-		position = 5
+		position = 6
 	)
 	default Color untradeableColor()
 	{
@@ -81,11 +92,26 @@ public interface NendaRolasInventoryValueConfig extends Config
 	)
 	@ConfigItem(
 		keyName = "textSize",
-		name = "Text size",
+		name = "Item value text size",
 		description = "Size of the value labels shown on inventory items",
-		position = 6
+		position = 7
 	)
 	default int textSize()
+	{
+		return 11;
+	}
+
+	@Range(
+		min = 8,
+		max = 18
+	)
+	@ConfigItem(
+		keyName = "totalTextSize",
+		name = "Total value text size",
+		description = "Size of the total value shown on the inventory icon",
+		position = 8
+	)
+	default int totalTextSize()
 	{
 		return 11;
 	}
@@ -97,7 +123,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "minimumValue",
 		name = "Minimum shown value",
 		description = "Hide per-item labels below this Grand Exchange value",
-		position = 7
+		position = 9
 	)
 	default int minimumValue()
 	{
@@ -108,7 +134,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "excludedSlots",
 		name = "Excluded slots",
 		description = "Inventory slots to ignore, for example: 1,2,5-8. Slots are counted left-to-right, top-to-bottom.",
-		position = 8
+		position = 10
 	)
 	default String excludedSlots()
 	{
@@ -122,7 +148,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "tierOneLimit",
 		name = "Tier 1 limit",
 		description = "Values below this use the tier 1 color",
-		position = 10
+		position = 20
 	)
 	default int tierOneLimit()
 	{
@@ -136,7 +162,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "tierTwoLimit",
 		name = "Tier 2 limit",
 		description = "Values below this use the tier 2 color",
-		position = 11
+		position = 21
 	)
 	default int tierTwoLimit()
 	{
@@ -150,7 +176,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "tierThreeLimit",
 		name = "Tier 3 limit",
 		description = "Values below this use the tier 3 color",
-		position = 12
+		position = 22
 	)
 	default int tierThreeLimit()
 	{
@@ -164,7 +190,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "tierFourLimit",
 		name = "Tier 4 limit",
 		description = "Values below this use the tier 4 color; higher values use the tier 5 color",
-		position = 13
+		position = 23
 	)
 	default int tierFourLimit()
 	{
@@ -175,7 +201,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "tierOneColor",
 		name = "Tier 1 color",
 		description = "Color for values under the tier 1 limit",
-		position = 20
+		position = 30
 	)
 	default Color tierOneColor()
 	{
@@ -186,7 +212,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "tierTwoColor",
 		name = "Tier 2 color",
 		description = "Color for values between tier 1 and tier 2",
-		position = 21
+		position = 31
 	)
 	default Color tierTwoColor()
 	{
@@ -197,7 +223,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "tierThreeColor",
 		name = "Tier 3 color",
 		description = "Color for values between tier 2 and tier 3",
-		position = 22
+		position = 32
 	)
 	default Color tierThreeColor()
 	{
@@ -208,7 +234,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "tierFourColor",
 		name = "Tier 4 color",
 		description = "Color for values between tier 3 and tier 4",
-		position = 23
+		position = 33
 	)
 	default Color tierFourColor()
 	{
@@ -219,7 +245,7 @@ public interface NendaRolasInventoryValueConfig extends Config
 		keyName = "tierFiveColor",
 		name = "Tier 5 color",
 		description = "Color for values above the tier 4 limit",
-		position = 24
+		position = 34
 	)
 	default Color tierFiveColor()
 	{

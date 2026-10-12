@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import javax.inject.Inject;
 import net.runelite.api.Client;
 import net.runelite.api.Item;
@@ -13,6 +14,7 @@ import net.runelite.api.ItemContainer;
 import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.gameval.InventoryID;
 import net.runelite.api.widgets.Widget;
+import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayLayer;
 import net.runelite.client.ui.overlay.OverlayPosition;
@@ -83,17 +85,19 @@ class InventoryTotalValueOverlay extends Overlay
 		}
 
 		final String text = ValueFormatter.format(total);
-		final Font originalFont = graphics.getFont();
 		final Rectangle bounds = inventoryIcon.getBounds();
-		Font font = originalFont.deriveFont(Font.BOLD, Math.max(8, config.textSize()));
-		graphics.setFont(font);
+		final Graphics2D labelGraphics = (Graphics2D) graphics.create();
+		labelGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+		labelGraphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
+		Font font = FontManager.getRunescapeBoldFont().deriveFont((float) Math.max(8, config.totalTextSize()));
+		labelGraphics.setFont(font);
 
-		FontMetrics metrics = graphics.getFontMetrics();
+		FontMetrics metrics = labelGraphics.getFontMetrics();
 		while (metrics.stringWidth(text) + PADDING_X * 2 > bounds.width + 12 && font.getSize() > 8)
 		{
 			font = font.deriveFont((float) font.getSize() - 1);
-			graphics.setFont(font);
-			metrics = graphics.getFontMetrics();
+			labelGraphics.setFont(font);
+			metrics = labelGraphics.getFontMetrics();
 		}
 
 		final int width = Math.min(bounds.width + 12, metrics.stringWidth(text) + PADDING_X * 2);
@@ -103,13 +107,13 @@ class InventoryTotalValueOverlay extends Overlay
 		final int textX = x + (width - metrics.stringWidth(text)) / 2;
 		final int textY = y + PADDING_Y + metrics.getAscent();
 
-		graphics.setColor(BACKGROUND);
-		graphics.fillRoundRect(x, y, width, height, 6, 6);
-		graphics.setColor(SHADOW);
-		graphics.drawString(text, textX + 1, textY + 1);
-		graphics.setColor(valueColorResolver.getColor(total));
-		graphics.drawString(text, textX, textY);
-		graphics.setFont(originalFont);
+		labelGraphics.setColor(BACKGROUND);
+		labelGraphics.fillRoundRect(x, y, width, height, 6, 6);
+		labelGraphics.setColor(SHADOW);
+		labelGraphics.drawString(text, textX + 1, textY + 1);
+		labelGraphics.setColor(valueColorResolver.getColor(total));
+		labelGraphics.drawString(text, textX, textY);
+		labelGraphics.dispose();
 
 		return new Dimension(width, height);
 	}
